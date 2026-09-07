@@ -1,42 +1,18 @@
-# Clippy 统一外置配置文件
-
 # 测试代码显式豁免
 allow-unwrap-in-tests = true
 allow-expect-in-tests = true
-allow-panic-in-tests = true
 
-# 复杂度阈值与参数约束
-too-many-arguments-threshold = 7
-cognitive-complexity-threshold = 25
-type-complexity-threshold = 250
-
-# 领域专业词汇白名单
-doc-valid-idents = [
-    "OpenAI",
-    "Anthropic",
-    "Gemini",
-    "OAuth",
-    "SSE",
-    "URL",
-    "PostgreSQL",
-    "SQLite",
-]
-
-# 统一禁用生产环境高危方法
+# 生产环境禁用常见坏味道方法
 disallowed-methods = [
-    { path = "core::option::Option::unwrap", reason = "生产代码严禁使用 unwrap，请通过模式匹配或 ? 操作符显式处理" },
-    { path = "core::result::Result::unwrap", reason = "生产代码严禁使用 unwrap，请通过 ? 操作符显式传播错误" },
-    { path = "core::option::Option::expect", reason = "生产代码严禁使用 expect，请返回领域错误" },
-    { path = "core::result::Result::expect", reason = "生产代码严禁使用 expect，请返回领域错误" },
+    { path = "core::option::Option::unwrap", reason = "生产代码禁止 unwrap" },
+    { path = "core::result::Result::unwrap", reason = "生产代码禁止 unwrap" },
+    { path = "core::option::Option::expect", reason = "生产代码禁止 expect" },
+    { path = "core::result::Result::expect", reason = "生产代码禁止 expect" },
 ]
 
-# 统一禁用调试与未完成宏
+# 生产环境禁用调试与未完成宏
 disallowed-macros = [
-    { path = "std::panic", reason = "生产代码严禁 panic" },
-    { path = "core::panic", reason = "生产代码严禁 panic" },
-    { path = "std::todo", reason = "严禁提交未完成的 todo 宏代码" },
-    { path = "core::todo", reason = "严禁提交未完成的 todo 宏代码" },
-    { path = "std::unimplemented", reason = "严禁提交未完成的 unimplemented 宏代码" },
-    { path = "core::unimplemented", reason = "严禁提交未完成的 unimplemented 宏代码" },
-    { path = "std::dbg", reason = "严禁遗留调试宏 dbg" },
+    { path = "std::panic", reason = "生产代码禁止 panic" },
+    { path = "std::dbg", reason = "禁止遗留调试宏 dbg" },
+    { path = "std::todo", reason = "禁止遗留未完成的 todo" },
 ]

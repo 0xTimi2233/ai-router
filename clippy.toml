@@ -1,6 +1,3 @@
-allow-unwrap-in-tests = true
-allow-expect-in-tests = true
-
 disallowed-methods = [
     "core::option::Option::unwrap",
     "core::result::Result::unwrap",

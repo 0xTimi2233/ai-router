@@ -38,6 +38,6 @@ jobs:
           persist-credentials: false
       - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
         with:
-          tool: cargo-deny
+          tool: just, cargo-deny
       - name: 执行依赖安全审计
-        run: cargo deny check
+        run: just audit

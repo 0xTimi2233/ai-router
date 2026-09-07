@@ -31,7 +31,7 @@ jobs:
         with:
           tool: just
       - name: 执行只读格式检查
-        run: just ci-fmt
+        run: just fmt-check
 
   # Clippy 门禁
   clippy:
@@ -50,7 +50,7 @@ jobs:
         with:
           tool: just
       - name: 执行 Clippy 静态检查
-        run: just ci-clippy
+        run: just lint
 
   # 跨平台测试矩阵
   test:
@@ -72,7 +72,7 @@ jobs:
         with:
           tool: just
       - name: 执行跨平台工作空间测试
-        run: just ci-test
+        run: just test
 
   # 测试覆盖率上报
   coverage:

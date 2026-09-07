@@ -13,9 +13,10 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_TOOLCHAIN: "1.98.1"
 
 jobs:
-  # 格式检查：最快的一道门禁
+  # 格式检查门禁
   fmt:
     name: 格式检查
     runs-on: ubuntu-latest
@@ -25,13 +26,13 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@d1031067263f94b142dd6c0ce24c5eb9d02d52a0 # master
         with:
-          toolchain: "1.98.0"
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
           components: rustfmt
       - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
         with:
           tool: just
-      - name: 执行只读格式检查
-        run: just ci-fmt
+      - name: 执行代码格式检查
+        run: just check
 
   # Clippy 门禁
   clippy:
@@ -43,18 +44,18 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@d1031067263f94b142dd6c0ce24c5eb9d02d52a0 # master
         with:
-          toolchain: "1.98.0"
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
           components: clippy
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
         with:
           tool: just
       - name: 执行 Clippy 静态检查
-        run: just ci-clippy
+        run: just lint
 
   # 跨平台测试矩阵
   test:
-    name: 测试 (${{ matrix.os }})
+    name: 跨平台测试 - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -66,13 +67,13 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@d1031067263f94b142dd6c0ce24c5eb9d02d52a0 # master
         with:
-          toolchain: "1.98.0"
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
         with:
           tool: just
       - name: 执行跨平台工作空间测试
-        run: just ci-test
+        run: just test
 
   # 测试覆盖率上报
   coverage:
@@ -84,13 +85,13 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@d1031067263f94b142dd6c0ce24c5eb9d02d52a0 # master
         with:
-          toolchain: "1.98.0"
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
         with:
           tool: cargo-llvm-cov
       - name: 生成代码覆盖率数据
-        run: cargo llvm-cov --workspace --all-features --locked --lcov --output-path lcov.info
+        run: cargo llvm-cov --lcov --output-path lcov.info
       - name: 上报覆盖率至 Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:

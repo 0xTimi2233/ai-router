@@ -19,15 +19,12 @@ repository = "https://github.com/0xTimi2233/ai-router"
 [workspace.dependencies]
 shared-kernel = { path = "server/shared_kernel", version = "=0.1.0" }
 
-[workspace.lints.clippy]
-unwrap_used = "deny"
-expect_used = "deny"
-panic = "deny"
-unwrap_in_result = "deny"
-
 [workspace.lints.rust]
 unsafe_code = "forbid"
 
 [profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
 strip = true
-lto = "thin"

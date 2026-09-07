@@ -31,17 +31,3 @@ ci-clippy:
 ci-test:
     cargo test --workspace --all-features --locked
 
-# 配置本机全局 Git 提交规范模板
-apply-git-template:
-    git config --global commit.template {{justfile_directory()}}/.gitmessage
-
-# 同步标准工程标签至 GitHub 远程仓库
-sync-labels repo="0xTimi2233/ai-router":
-    #!/usr/bin/env bash
-    set -euo pipefail
-    jq -c '.[]' "{{justfile_directory()}}/.github/labels.json" | while read -r item; do
-        name=$(echo "$item" | jq -r .name)
-        color=$(echo "$item" | jq -r .color)
-        desc=$(echo "$item" | jq -r .description)
-        gh label create "$name" --color "$color" --description "$desc" --repo "{{repo}}" --force
-    done

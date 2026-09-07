@@ -1,18 +1,15 @@
-# 测试代码显式豁免
 allow-unwrap-in-tests = true
 allow-expect-in-tests = true
 
-# 生产环境禁用常见坏味道方法
 disallowed-methods = [
-    { path = "core::option::Option::unwrap", reason = "生产代码禁止 unwrap" },
-    { path = "core::result::Result::unwrap", reason = "生产代码禁止 unwrap" },
-    { path = "core::option::Option::expect", reason = "生产代码禁止 expect" },
-    { path = "core::result::Result::expect", reason = "生产代码禁止 expect" },
+    "core::option::Option::unwrap",
+    "core::result::Result::unwrap",
+    "core::option::Option::expect",
+    "core::result::Result::expect",
 ]
 
-# 生产环境禁用调试与未完成宏
 disallowed-macros = [
-    { path = "std::panic", reason = "生产代码禁止 panic" },
-    { path = "std::dbg", reason = "禁止遗留调试宏 dbg" },
-    { path = "std::todo", reason = "禁止遗留未完成的 todo" },
+    "std::panic",
+    "std::dbg",
+    "std::todo",
 ]

@@ -12,3 +12,6 @@ workspace = true
 
 [dependencies]
 shared-kernel = { path = "../shared_kernel" }
+
+[package.metadata.dist]
+dist = true

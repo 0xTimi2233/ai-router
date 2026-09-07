@@ -3,6 +3,7 @@ name = "ai-router-server"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
+publish.workspace = true
 license.workspace = true
 repository.workspace = true
 
@@ -10,4 +11,7 @@ repository.workspace = true
 workspace = true
 
 [dependencies]
-shared-kernel = { workspace = true }
+shared-kernel = { path = "../shared_kernel" }
+
+[package.metadata.dist]
+dist = true

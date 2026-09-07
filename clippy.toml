@@ -1,0 +1,4 @@
+# Clippy 全局配置
+# 测试代码允许 unwrap 与 expect，生产代码由 workspace lints 禁止
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true

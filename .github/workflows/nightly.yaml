@@ -1,0 +1,19 @@
+name: Nightly
+
+# 定时复检：定期复查存量代码与最新发布的漏洞库
+
+on:
+  schedule:
+    - cron: "30 23 * * 0" # 每周日 UTC 23:30（北京时间周一 07:30）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  security:
+    name: 定时安全审计
+    permissions:
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/security.yaml

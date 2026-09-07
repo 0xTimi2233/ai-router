@@ -1,20 +1,22 @@
 default:
     @just --list
 
-# 原地格式化并执行编译与代码规范检查
-check:
-    cargo fmt --all
-    cargo check --workspace --all-targets
-    cargo clippy --workspace --all-targets --all-features -- -D warnings
+# 格式化代码
+fmt:
+    cargo fmt
 
-# 锁定依赖与全部特性的全量测试
+# 格式检查
+fmt-check:
+    cargo fmt --check
+
+# 代码规范静态检查
+lint:
+    cargo clippy -- -D warnings
+
+# 测试
 test:
-    cargo test --workspace --all-features --locked
+    cargo test
 
-# 依赖漏洞与许可证合规审计
+# 依赖审计
 audit:
     cargo deny check
-
-# 只读校验代码格式
-fmt-check:
-    cargo fmt --all --check

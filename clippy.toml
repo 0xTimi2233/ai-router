@@ -1,4 +1,22 @@
-# Clippy 全局配置
-# 测试代码允许 unwrap 与 expect，生产代码由 workspace lints 禁止
+# Clippy 全局行为参数与阈值配置
+# 生产代码由 Cargo.toml 中的 workspace.lints 禁止 unwrap/expect/panic，测试代码在此显式豁免
 allow-unwrap-in-tests = true
 allow-expect-in-tests = true
+allow-panic-in-tests = true
+
+# 认知复杂度与函数参数阈值
+too-many-arguments-threshold = 7
+cognitive-complexity-threshold = 25
+type-complexity-threshold = 250
+
+# 文档专业词汇白名单（无需反引号转义）
+doc-valid-idents = [
+    "OpenAI",
+    "Anthropic",
+    "Gemini",
+    "OAuth",
+    "SSE",
+    "URL",
+    "PostgreSQL",
+    "SQLite",
+]

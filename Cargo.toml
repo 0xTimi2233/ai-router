@@ -20,14 +20,35 @@ repository = "https://github.com/0xTimi2233/ai-router"
 shared-kernel = { path = "server/shared_kernel", version = "=0.1.0" }
 
 [workspace.lints.clippy]
+# 严禁生产环境 panic 与 unwrap
 unwrap_used = "deny"
 expect_used = "deny"
 panic = "deny"
 unwrap_in_result = "deny"
+indexing_slicing = "deny"
+
+# 严禁遗留调试代码
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+
+# 类型安全与代码组织
+undocumented_unsafe_blocks = "deny"
+rc_mutex = "deny"
+wildcard_imports = "deny"
+enum_glob_use = "deny"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
+missing_docs = "warn"
+unused_must_use = "deny"
 
 [profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
 strip = true
-lto = "thin"
+

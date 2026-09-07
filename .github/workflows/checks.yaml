@@ -46,11 +46,8 @@ jobs:
           toolchain: "1.98.0"
           components: clippy
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
-      - uses: taiki-e/install-action@84f5ac3124727fb3d284d4d22ee9ab3654fd09a6 # v2.87.7
-        with:
-          tool: just
       - name: 执行 Clippy 静态检查
-        run: just lint
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
 
   # 跨平台测试矩阵
   test:

@@ -10,4 +10,4 @@ repository.workspace = true
 workspace = true
 
 [dependencies]
-shared-kernel = { workspace = true }
+shared-kernel = { path = "../shared_kernel" }

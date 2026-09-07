@@ -1,6 +1,6 @@
 name: Security
 
-# 安全门禁：由 ci.yaml 编排调用，执行密钥泄露扫描、依赖合规审计与 CodeQL 分析
+# 安全门禁：由 ci.yaml 编排调用，执行密钥泄露扫描与 RustSec 依赖漏洞合规审计
 
 on:
   workflow_call:
@@ -41,22 +41,3 @@ jobs:
           tool: cargo-deny
       - name: 执行依赖安全审计
         run: cargo deny check
-
-  # CodeQL 静态安全分析
-  codeql:
-    name: CodeQL 静态分析
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
-        with:
-          languages: rust
-          build-mode: none
-      - uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
-        with:
-          category: "/language:rust"

@@ -13,7 +13,4 @@ permissions:
 jobs:
   security:
     name: 定时安全审计
-    permissions:
-      contents: read
-      security-events: write
     uses: ./.github/workflows/security.yaml

@@ -1,7 +1,5 @@
 name: CI
 
-# 测试与安全门禁总编排：并行调度 checks.yaml 与 security.yaml
-
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -25,4 +23,7 @@ jobs:
 
   security:
     name: 安全审计
+    permissions:
+      contents: read
+      security-events: write
     uses: ./.github/workflows/security.yaml

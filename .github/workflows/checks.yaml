@@ -1,7 +1,5 @@
 name: Checks
 
-# 测试与构建门禁：由 ci.yaml 通过 workflow_call 编排调用
-
 on:
   workflow_call:
     secrets:
@@ -16,7 +14,6 @@ env:
   RUST_TOOLCHAIN: "1.98.1"
 
 jobs:
-  # 格式检查门禁
   fmt:
     name: 格式检查
     runs-on: ubuntu-latest
@@ -34,7 +31,6 @@ jobs:
       - name: 执行代码格式检查
         run: just check
 
-  # Clippy 门禁
   clippy:
     name: Clippy 检查
     runs-on: ubuntu-latest
@@ -53,7 +49,6 @@ jobs:
       - name: 执行 Clippy 静态检查
         run: just lint
 
-  # 跨平台测试矩阵
   test:
     name: 跨平台测试 - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -75,7 +70,6 @@ jobs:
       - name: 执行跨平台工作空间测试
         run: just test
 
-  # 测试覆盖率上报
   coverage:
     name: 覆盖率分析
     runs-on: ubuntu-latest
@@ -91,7 +85,9 @@ jobs:
         with:
           tool: cargo-llvm-cov
       - name: 生成代码覆盖率数据
-        run: cargo llvm-cov --lcov --output-path lcov.info
+        run: |
+          cargo llvm-cov --lcov --output-path lcov.info
+          cargo llvm-cov --summary-only >> $GITHUB_STEP_SUMMARY
       - name: 上报覆盖率至 Codecov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:

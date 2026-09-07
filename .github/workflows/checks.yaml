@@ -54,7 +54,7 @@ jobs:
 
   # 跨平台测试矩阵
   test:
-    name: 测试 (${{ matrix.os }})
+    name: 跨平台测试 - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

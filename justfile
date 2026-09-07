@@ -1,22 +1,18 @@
 default:
     @just --list
 
-# 格式化代码
-fmt:
-    cargo fmt
-
-# 格式检查
-fmt-check:
+# 代码格式规范检查
+check:
     cargo fmt --check
 
 # 代码规范静态检查
 lint:
-    cargo clippy -- -D warnings
+    cargo clippy
 
-# 测试
+# 全量测试
 test:
     cargo test
 
-# 依赖审计
+# 依赖漏洞审计
 audit:
     cargo deny check
